@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "name": "Hot Cheetos",
+    "image": "./images/hotcheetos.jpg",
+    "price": 1.25,
+    "quantity": 10
+  },
+  {
+    "id": "2",
+    "name": "Funyuns",
+    "image": "./images/funyuns.jpeg",
+    "price": 2.25,
+    "quantity": 10
+  },
+  {
+    "id": "3",
+    "name": "Knotts Cookies",
+    "image": "./images/knotts.jpg",
+    "price": 2.25,
+    "quantity": 10
+  },
+  {
+    "id": "4",
+    "name": "Pop Tarts",
+    "image": "./images/poptarts.jpeg",
+    "price": 2,
+    "quantity": 8
+  }
+]

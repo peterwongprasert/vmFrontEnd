@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <!-- <link href="style.css" rel="stylesheet" type="text/css" /> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+    <script src="scripts/script.js"></script>
+</head>
+<style>
+  /* html {
+  height: 100%;
+  width: 100%;
+}
+ */
+.Bigimage{
+    /* background-image: url(photos/view.jpg); */
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+    width: 100%;
+    height: 100%;
+    -webkit-filter: blur(5px); 
+    filter: blur(5px);
+    background-repeat: no-repeat;
+}
+.example{
+  width: 30%;
+  margin: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.checked{
+  color: orange;
+}
+.justify-left-right{
+  display: flex;
+  justify-content: space-between;
+}
+.card-border{
+  border: solid black;
+  /* width: 25px; */
+  /* height: 25px; */
+  /* padding: 5% 5%; */
+  width: 25%;
+  height: 25%;
+}
+.container{
+  display: flex;
+  justify-content: space-evenly;
+}
+img{
+  /* width: 30%;
+  height: 50%;
+  object-fit: fill;
+  background-color: green; */
+} 
+.bottom{
+  width: 25%;
+  /* height: 25%; */
+  margin-left: 50%;
+}
+.btn-bottom{
+  width: 25%;
+}
+.bottom-row{
+  width: 100%;
+  display: flex;
+  /* justify-content: space-between; */
+  justify-content: center;
+}
+</style>
+<body>
+  <h1>Vending Machine Header</h1>
+  <div class='card-list container' id='card-list'>
+    <!-- <div class='item'> -->
+
+    <!-- still need to fix the styling of the bottom row, but this is the gist of it -->
+      <!-- <div class="example">
+        <div class="card card-body" id="1">
+          <div class="row card-picture">
+            <img src="./images/hotcheetos.jpg" alt="item-name">
+          </div>
+          <div class="card-text">
+            <h3>Hot Cheetos</h3>
+            <h4 value='1' id='1'>$1.00</h4>
+            <span class='bottom' id='count-1'>0</span>
+          </div>
+        </div>
+        <div class='row bottom-row'>
+          <button class='btn btn-danger btn-bottom' value='m-1'>-</button>
+          <input type='text' value='0' id='1' name='hot-cheetos' hidden>           
+          <button class='btn btn-primary bottom' value='a-1'>+</button>
+        </div>
+      </div> -->
+      
+    <!-- </div> -->
+    
+
+    
+  <!-- <div class="card example" id="2">
+    <div class="card-body">
+      <div class="row card-picture">
+        <img src="./images/funyuns.jpeg" alt="item-name">
+      </div>
+      <div class="card-text">
+        <h3>Funyuns</h3>
+      </div>
+    </div>
+    <div class='row container'>
+      <button class='btn btn-danger bottom' value='m-2'>-</button>
+      <input type='text' value='0' id='2' name='funyuns' hidden>
+      <span class='bottom' id='2'>0</span>
+      <button class='btn btn-primary bottom'value='a-2'>+</button>
+    </div>
+  </div> -->
+
+  <!-- <div class="example">
+    <div class="card card-body" id="2">
+      <div class="row card-picture">
+        <img src="./images/funyuns.jpeg" alt="item-name">
+      </div>
+      <div class="card-text">
+        <h3>Funyuns</h3>
+        <h4 value='1' id='2'>$1.00</h4>
+        <span class='bottom' id='count-2'>0</span>
+      </div>
+    </div>
+    <div class='row bottom-row'>
+      <button class='btn btn-danger btn-bottom' value='m-2'>-</button>
+      <input type='text' value='0' id='2' name='Funyuns' hidden>           
+    </div>
+  </div>-->
+
+  </div>
+  <div>
+    <button id="finalize">Accept</button>
+  </div> 
+  
+  <script>
+   
+  </script>
+  
+</body>
+
+</html>
