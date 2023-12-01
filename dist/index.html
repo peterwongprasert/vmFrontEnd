@@ -87,75 +87,47 @@ img{
 .checkout{
   position: sticky;
 }
+
+.page-big{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* .outside {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+} */
 </style>
 <body>
   <h1>Vending Machine Header</h1>
-  <div class="checkout">
-    <h2 id="total">Select Item..<br></h2>
-    <button id="finalize">Accept</button>
-  </div> 
-  <div class='card-list container' id='card-list'>
-    <!-- <div class='item'> -->
-
-    <!-- still need to fix the styling of the bottom row, but this is the gist of it -->
-      <!-- <div class="example">
-        <div class="card card-body" id="1">
-          <div class="row card-picture">
-            <img src="./images/hotcheetos.jpg" alt="item-name">
-          </div>
-          <div class="card-text">
-            <h3>Hot Cheetos</h3>
-            <h4 value='1' id='1'>$1.00</h4>
-            <span class='bottom' id='count-1'>0</span>
-          </div>
-        </div>
-        <div class='row bottom-row'>
-          <button class='btn btn-danger btn-bottom' value='m-1'>-</button>
-          <input type='text' value='0' id='1' name='hot-cheetos' hidden>           
-          <button class='btn btn-primary bottom' value='a-1'>+</button>
-        </div>
-      </div> -->
-      
-    <!-- </div> -->
-    
-
-    
-  <!-- <div class="card example" id="2">
-    <div class="card-body">
-      <div class="row card-picture">
-        <img src="./images/funyuns.jpeg" alt="item-name">
+  <div class="outside">
+    <section class="page-big page1">
+      <div>
+        <form id="login-form">
+          <label>Vending Machine ID</label>
+          <input name="vm-id" id='vm-id'><br>
+          <label>User ID</label>
+          <input name="vm-id" id='user-id'><br>
+          <label>Password</label>
+          <input name="vm-id" id='password'><br>
+          <button id="login">Submit</button>
+        </form>
       </div>
-      <div class="card-text">
-        <h3>Funyuns</h3>
+    </section>
+    <section class="page2">
+      <div class="checkout">
+        <h2 id="total">Select Item..<br></h2>
+        <button id="finalize">Accept</button>
+      </div> 
+      <div class='card-list container' id='card-list'>
+      <!-- cards loaded here -->
       </div>
-    </div>
-    <div class='row container'>
-      <button class='btn btn-danger bottom' value='m-2'>-</button>
-      <input type='text' value='0' id='2' name='funyuns' hidden>
-      <span class='bottom' id='2'>0</span>
-      <button class='btn btn-primary bottom'value='a-2'>+</button>
-    </div>
-  </div> -->
-
-  <!-- <div class="example">
-    <div class="card card-body" id="2">
-      <div class="row card-picture">
-        <img src="./images/funyuns.jpeg" alt="item-name">
-      </div>
-      <div class="card-text">
-        <h3>Funyuns</h3>
-        <h4 value='1' id='2'>$1.00</h4>
-        <span class='bottom' id='count-2'>0</span>
-      </div>
-    </div>
-    <div class='row bottom-row'>
-      <button class='btn btn-danger btn-bottom' value='m-2'>-</button>
-      <input type='text' value='0' id='2' name='Funyuns' hidden>           
-    </div>
-  </div> -->
-
-  </div>
-  
+    </section>
+</div>
   
   <script src="bundle.js"></script>
   
