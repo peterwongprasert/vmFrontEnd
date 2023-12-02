@@ -5,11 +5,10 @@
 // one by one using createCard. Once all the cards are created, we link the buttons using 
 // linkButtons and linkCards.
 
-// TODO: 
-// We need to create a function that updates the inventory when the user accepts the transaction. 
 // 
 // ===============================================================================================================
 
+// no longer in use
 async function fetchInventory() {
   try {
     const response = await fetch('data/inventory.json');

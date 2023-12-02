@@ -58,10 +58,7 @@ function validateCard(creditCardNumber, creditCardName, creditCardCCV, creditCar
   return true;
 }
 
-function submitCash(total){
-  var cash = document.getElementById("cash").value;
-  console.log(cash)
-  console.log(total)
+function submitCash(cash, total){
   if(cash >= total){
     return true;
   }
