@@ -179,6 +179,7 @@ function loadInventory(itemsRay) {
                   console.log('All updates successful');
                   cart = {};
                   console.log(cart);
+                  location.reload()
               })
               .catch((error) => {
                   console.error('Error updating documents:', error);
