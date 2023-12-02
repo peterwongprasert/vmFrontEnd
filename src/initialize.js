@@ -33,7 +33,7 @@ function renderCards(inventory, inventoryObj){
 
   //pass the inventory into this function and cycle through it's data creating cards
   inventory.forEach((item) => {
-    console.log(item[0]);
+    // console.log(item[0]);
     // we might as well populate the inventory object here too. 
     inventoryObj[item[0].id] = item[0];
     // console.log(inventoryObj[item.id])
@@ -161,12 +161,58 @@ function linkButtons(cart, inventoryObj){
       }
     })
   })
+}
 
-  let accept = document.getElementById('finalize')
+function modifyCheckoutHtml(cart, inventoryObj){
+  // console.log(inventoryObj)
+  let container = document.getElementById('checkout-list');
+  container.innerHTML = '';
 
-  accept.addEventListener('click', () => {
-    finalize();
-  })
+  let l = document.createElement('label')
+  
+  for(const key in cart){
+    // let name = document.createElement('label');
+    // let quantity = document.createElement('label');
+    // let price = document.createElement('label');
+    
+    // Check if inventoryObj[key] is defined before accessing 'name'
+    if (inventoryObj[key] && inventoryObj[key].name) {
+      // let name = document.createElement('label');
+      // let quantity = document.createElement('label');
+      // let price = document.createElement('label');
+
+      // name.textContent = inventoryObj[key].name;
+      // quantity.textContent = cart[key] > 1 ? `x(${cart[key]})` : '';
+      // price.textContent = inventoryObj[key].price;
+      
+      // container.appendChild(name);
+      // container.appendChild(quantity);
+      // container.appendChild(price);
+
+      const columnDiv = document.createElement('div');
+      columnDiv.className = 'column';
+
+      // Create labels for Name, Quantity, and Price
+      const name = document.createElement('label');
+      const quantity = document.createElement('label');
+      const price = document.createElement('label');
+
+      // Assign values to labels based on itemData
+      name.textContent = inventoryObj[key].name;
+      quantity.textContent = cart[key] > 1 ? `x(${cart[key]})` : '';
+      price.textContent = inventoryObj[key].price;
+
+      // Add 'item-name' class to the Name label
+      name.classList.add('item-name');
+
+      // Append labels to the columnDiv
+      columnDiv.appendChild(name);
+      columnDiv.appendChild(quantity);
+      columnDiv.appendChild(price);
+      container.appendChild(columnDiv);
+    }
+  }
+
 }
 
 function addQuantity(cart, inventoryObj, id, quantity){
@@ -189,6 +235,7 @@ function addQuantity(cart, inventoryObj, id, quantity){
   // update the total and modify the screen total
   cart['total'] += parseFloat(inventoryObj[id].price);
   $('#total').html(`$${parseFloat(cart['total']).toFixed(2)}`);
+  modifyCheckoutHtml(cart, inventoryObj);
   console.log(cart);
 }
 
@@ -201,9 +248,11 @@ function subQuantity(cart, inventoryObj, id, quantity){
   }
   if(cart[id] === 0){
     $(`button[id=${id}]`).css('display', 'none')
+    delete cart[id];
   }
   cart['total'] -= parseFloat(inventoryObj[id].price);
   $('#total').html(`$${parseFloat(cart['total']).toFixed(2)}`);
+  modifyCheckoutHtml(cart, inventoryObj);
   console.log(cart);
 }
 
@@ -231,23 +280,6 @@ async function init(inventory, cart, inventoryObj) {
   //   console.error('An error occurred:', error);
   // }
 };
-
-// GENERATED
-// async function init(cart, inventoryObj) {
-//   console.log('modules init loaded');
-//   try {
-//     const inventory = await fetchInventory();
-//     if (inventory) {
-//       renderCards(inventory, inventoryObj);
-//       linkButtons(cart, inventoryObj);
-//       linkCards(cart, inventoryObj);
-//     } else {
-//       // Handle the case where the inventory couldn't be fetched
-//     }
-//   } catch (error) {
-//     console.error('An error occurred:', error);
-//   }
-// }
 
 module.exports = {
   init,

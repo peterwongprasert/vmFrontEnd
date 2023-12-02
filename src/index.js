@@ -1,11 +1,8 @@
 //TODO: 
 // - Style everything
-// - login
-// - create a checkout page (List the items that you purchased)
 // - cash and credit pages
 // - timeout
 // - reset the cart once the purchase is made
-// for expired items, have the list of expired items activate on the manager side checking for dates
 
 import { initializeApp } from  'firebase/app'
 import {
@@ -15,10 +12,11 @@ import {
 const login = require('./login')
 const myModule = require('./initialize');
 const slide = require('./slide')
-// const config = require('./config')
+const checkoutFunc = require('./checkout')
 
 // initialize the purchasing screen
 function loadMachine(machineId){
+  currentMachine = machineId;
   console.log('load machine')
   // const colRef = collection(db, 'items')
 
@@ -33,7 +31,9 @@ function loadMachine(machineId){
     snapshot.docs.forEach((doc) => {
       machine.push({ ...doc.data(), id: doc.id})
     })
-    console.log(machine[0].items)
+    // console.log(machine)
+    // console.log(machine[0])
+    console.log(machine[0].id)
 
     // run the functions
     // items = loadInventory(machine[0].items);
@@ -121,56 +121,77 @@ function loadInventory(itemsRay) {
 
   //Accept Button
   document.getElementById('finalize').addEventListener('click', (e) => {
+    console.log('click')
     let docRef;
     const updatePromises = [];
 
+    let check = $(`#coc`).val() === '1' ? checkoutFunc.submitCreditCard() : checkoutFunc.submitCash(cart.total)
+    if($(`#coc`).val() === '1'){
+      check = checkoutFunc.submitCreditCard()
+    }else{
+      check = checkoutFunc.submitCash(cart.total)
+    }
+    console.log(check)
     // we need to go through all the items in the cart
-    for(const key in cart){
+    if(check){
+      for (const key in cart) {
+        // ignore the total portion
+        if (cart.hasOwnProperty(key) && key !== 'total') {
+            // key-value pair: "key" : quantity
+            console.log(`${key}: ${cart[key]}`);
 
-      // ignore the total portion
-      if(cart.hasOwnProperty(key) && key !== 'total'){
+            console.log(inventoryObj[key])
 
-        //key-value pair: "key" : quantity
-        console.log(`${key}: ${cart[key]}`);
+            if (inventoryObj[key]) {
+                inventoryObj[key].quantity -= cart[key];
 
-        console.log(inventoryObj[key])
+                docRef = doc(db, 'items', inventoryObj[key].id);
 
-        if(inventoryObj[key]){
-          inventoryObj[key].quantity -= cart[key];
-    
-          docRef = doc(db, 'items', inventoryObj[key].id);
-    
-          // Push the update promise into the array
-          const updatePromise = updateDoc(docRef, {
-            quantity: inventoryObj[key].quantity,
-          });
-    
-          updatePromises.push(updatePromise);
-        }else{
-          console.error(`Document with ID ${key} not found in inventoryObj`);
+                // Push the update promise into the array
+                const updatePromise = updateDoc(docRef, {
+                    quantity: inventoryObj[key].quantity,
+                });
+
+                updatePromises.push(updatePromise);
+            } else {
+                console.error(`Document with ID ${key} not found in inventoryObj`);
+            }
         }
       }
 
-      // push another updateDoc into the promise array
-      // docRef = doc(db, 'Transactions', machineId);
-      // let updatePromise = updateDoc(docRef, {
-      //   total : increment(cart['total'])
-      // })
+    const colRef = collection(db, 'Transactions');
+    const q = query(colRef, where("vendingMachineID", "==", currentMachine));
 
-      // updatePromises.push(updatePromise);
+    getDocs(q)
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // Assuming `increment` is correctly imported
+              const updatePromise = updateDoc(doc.ref, {
+                  total: increment((cart['total']))
+              });
+
+              updatePromises.push(updatePromise);
+          });
+
+          // Move the Promise.all block here, outside the forEach loop
+          Promise.all(updatePromises)
+              .then(() => {
+                  console.log('All updates successful');
+                  cart = {};
+                  console.log(cart);
+              })
+              .catch((error) => {
+                  console.error('Error updating documents:', error);
+              });
+      })
+      .catch((error) => {
+          console.error('Error querying documents:', error);
+      });
+    }else{
+      console.log('not accepted')
     }
 
-    // execute the promises
-    Promise.all(updatePromises)
-    .then(() => {
-      console.log('All updates successful');
-      cart = {};
-      console.log(cart);
-    })
-    .catch((error) => {
-      console.error('Error updating documents:', error);
-    });
-  })
+});
 
   // Veryify Login
   function verifyLogin(cred){
@@ -204,6 +225,11 @@ function loadInventory(itemsRay) {
     console.log(cred);
     verifyLogin(cred)
   })
+
+  $(document).ready(function() {
+    slide.connectSlides(page);
+    checkoutFunc.connectCheckout();
+  });
   
   const firebaseConfig = {
     apiKey: "AIzaSyASrZnIJIWS91rh6Vy6VUR3TU0l8CX5Rek",
@@ -224,8 +250,10 @@ function loadInventory(itemsRay) {
   let cart = { total : 0 };
   let inventoryObj = {};
   let cred;
+  let currentMachine;
   let page = 1;
 
-  slide.connectSlides(page);
+  // slide.connectSlides(page);
+  // checkoutFunc.connectCheckout();
 
   // loadMachine("VM ID HERE");

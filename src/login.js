@@ -4,6 +4,8 @@ function promptLogin(){
     $(`#user-id`).val(),
     $(`#password`).val()
   ]
+  $(`#total`).html('Select Item..');
+  $(`.page1`).css('display', 'none');
 
   return inputObj;
 }
