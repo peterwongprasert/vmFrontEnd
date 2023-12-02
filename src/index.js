@@ -5,6 +5,7 @@
 // - cash and credit pages
 // - timeout
 // - reset the cart once the purchase is made
+// for expired items, have the list of expired items activate on the manager side checking for dates
 
 import { initializeApp } from  'firebase/app'
 import {
@@ -13,27 +14,109 @@ import {
 } from 'firebase/firestore'
 const login = require('./login')
 const myModule = require('./initialize');
+const slide = require('./slide')
 // const config = require('./config')
 
 // initialize the purchasing screen
 function loadMachine(machineId){
-  const colRef = collection(db, 'items')
-  // const q = query(colRef, where())
+  console.log('load machine')
+  // const colRef = collection(db, 'items')
 
-  getDocs(colRef)
+  let colRef = collection(db, 'Vending_Machines');
+  let q = query(colRef, where("vendingMachineID", "==", machineId));
+  let items;
+
+  // getDocs(colRef)
+  getDocs(q)
   .then((snapshot) => {
-    let items = []
+    let machine = []
     snapshot.docs.forEach((doc) => {
-      items.push({ ...doc.data(), id: doc.id})
+      machine.push({ ...doc.data(), id: doc.id})
     })
-    // console.log(items)
+    console.log(machine[0].items)
 
     // run the functions
-    myModule.init(items, cart, inventoryObj);
+    // items = loadInventory(machine[0].items);
+    loadInventory(machine[0].items)
+    .then((items) => {
+      console.log()
+      console.log('then: ' + items);
+      myModule.init(items, cart, inventoryObj);
+    })
+    .catch((error) => {
+      console.error('Error loading inventory:', error);
+    });
+
+    console.log(items);
+
+    // myModule.init(items, cart, inventoryObj);
   })
   .catch(err => {
-    console.log(err.message)
+    // console.log(err.message)
   })
+}
+
+// for all items
+// function loadMachine(machineId){
+//   const colRef = collection(db, 'items')
+//   // const q = query(colRef, where())
+
+//   getDocs(colRef)
+//   .then((snapshot) => {
+//     let items = []
+//     snapshot.docs.forEach((doc) => {
+//       items.push({ ...doc.data(), id: doc.id})
+//     })
+//     console.log(items)
+
+//     // run the functions
+//     myModule.init(items, cart, inventoryObj);
+//   })
+//   .catch(err => {
+//     console.log(err.message)
+//   })
+// }
+
+// function loadInventory(itemsRay){
+//   // const colRef = collection(db, 'items')
+//   let colRef = collection(db, 'items')
+//   let q
+//   let items = []
+
+//   itemsRay.forEach(element => {
+//     q = query(colRef, where("id", "==", element))
+
+//     getDocs(q)
+//     .then((snapshot) => {
+//       snapshot.docs.forEach((doc) => {
+//         items.push({ ...doc.data(), id: doc.id})
+//       })
+//     })
+//     .catch(err => {
+//       console.log(err.message)
+//     })
+//   });
+//   return(items);
+//   // console.log(items)
+// }
+
+function loadInventory(itemsRay) {
+  console.log('load inventory')
+
+  let colRef = collection(db, 'items');
+
+  return Promise.all(
+    itemsRay.map((element) => {
+      const q = query(colRef, where("id", "==", element));
+      return getDocs(q)
+        .then((snapshot) => {
+          return snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    })
+  );
 }
 
   //Accept Button
@@ -141,7 +224,8 @@ function loadMachine(machineId){
   let cart = { total : 0 };
   let inventoryObj = {};
   let cred;
-  
+  let page = 1;
 
+  slide.connectSlides(page);
 
   // loadMachine("VM ID HERE");

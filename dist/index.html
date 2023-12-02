@@ -88,24 +88,40 @@ img{
   position: sticky;
 }
 
-.page-big{
+/* .page-big{
   height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+} */
 /* .outside {
   width: 100%;
   display: flex;
   overflow-x: auto;
 } */
+.outside {
+  margin: 0;
+  overflow-x: scroll; /* Enable horizontal scrolling */
+  scroll-snap-type: x mandatory;
+  display: flex; /* Set display to flex to align pages side by side */
+}
+.big-page {
+  width: 99vw; /* Set the width to fill the entire viewport width */
+  height: 100vh;
+  scroll-snap-align: start;
+  flex: 0 0 auto; /* Set flex properties to control sizing */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+}
 </style>
 <body>
   <h1>Vending Machine Header</h1>
   <div class="outside">
-    <section class="page-big page1">
+    <!-- <section class="page-big page1">
       <div>
         <form id="login-form">
           <label>Vending Machine ID</label>
@@ -124,9 +140,55 @@ img{
         <button id="finalize">Accept</button>
       </div> 
       <div class='card-list container' id='card-list'>
-      <!-- cards loaded here -->
+      
+        
       </div>
     </section>
+    <section class="page-big page3">
+      <div>
+        <h2>Checkout</h2>
+        <div>
+
+        </div>
+      </div>
+    </section> -->
+
+    <div class='big-page page1'>
+      <div>
+        <form id="login-form">
+          <label>Vending Machine ID</label>
+          <input name="vm-id" id='vm-id'><br>
+          <label>User ID</label>
+          <input name="vm-id" id='user-id'><br>
+          <label>Password</label>
+          <input name="vm-id" id='password'><br>
+          <button id="login">Submit</button>
+        </form>
+      </div>
+      <!-- <button class="scroll-button next">Next Page</button> -->
+    </div>
+    <div class='big-page page2 card-list containe'>
+      <div class="checkout">
+        <h2 id="total">Select Item..<br></h2>
+        <button id="finalize">Accept</button>
+      </div> 
+      <div class='card-list container' id='card-list'>
+      
+        
+      </div>
+      <!-- <button class="scroll-button next">Next Page</button> -->
+    </div>
+    <div class='big-page page3'>
+      <!-- <button class="scroll-button prev">Prev Page</button> -->
+      Content Page 3
+      <!-- <button class="scroll-button next" id='cash'>Cash</button> -->
+      <!-- <button class="scroll-button next" id='card'>Credit</button> -->
+    </div>
+    <div class='big-page page4'>
+      <!-- <button class="scroll-button prev">Prev Page</button> -->
+      Content Page 4
+      <!-- <button class="scroll-button next">Accept</button> -->
+    </div>
 </div>
   
   <script src="bundle.js"></script>

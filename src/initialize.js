@@ -26,23 +26,31 @@ async function fetchInventory() {
 
 //function in charge of rendering all the cards
 function renderCards(inventory, inventoryObj){
-  // console.log(inventory);
+  console.log('render cards')
+  console.log(inventoryObj);
+  // inventory = inventory[0];
+  
 
   //pass the inventory into this function and cycle through it's data creating cards
   inventory.forEach((item) => {
+    console.log(item[0]);
     // we might as well populate the inventory object here too. 
-    inventoryObj[item.id] = item;
+    inventoryObj[item[0].id] = item[0];
     // console.log(inventoryObj[item.id])
-    let appending = createCard(item);
+    let appending = createCard(item[0]);
 
     document.getElementById('card-list').appendChild(appending);
   })
+
+  // inventory.forEach((item) => {
+  //   console.log(item)
+  // })
 }
 
 // not finished, but here is the function to create the cards dynamically
 // once we have all the necessary data, we can pass objects into this function item by item
 function createCard(item){
-
+  console.log("item: " + item);
   // creating a card DOM element from top down
   // Create the main container div
   const cardContainer = document.createElement('div');
@@ -131,6 +139,7 @@ function linkCards(cart, inventoryObj){
     card.addEventListener('click', () => {
       //this looks a little messy, but we need query selectors to get the current count
       //if the item's cart amount is less than the inventory
+      console.log(inventoryObj)
       if(parseInt($(`input[id=${card.id}]`).val()) < inventoryObj[card.id].quantity){
         // $(`#${id}`).val(quantity + 1)
         // $(`span[id=${id}]`).html($(`#${id}`).val())
@@ -209,6 +218,7 @@ async function init(inventory, cart, inventoryObj) {
   // try {
     // let inventory = await fetchInventory();
     // console.log(inventory);
+    console.log(inventoryObj)
     if (inventory) {
       renderCards(inventory, inventoryObj);
       linkButtons(cart, inventoryObj);
@@ -221,6 +231,23 @@ async function init(inventory, cart, inventoryObj) {
   //   console.error('An error occurred:', error);
   // }
 };
+
+// GENERATED
+// async function init(cart, inventoryObj) {
+//   console.log('modules init loaded');
+//   try {
+//     const inventory = await fetchInventory();
+//     if (inventory) {
+//       renderCards(inventory, inventoryObj);
+//       linkButtons(cart, inventoryObj);
+//       linkCards(cart, inventoryObj);
+//     } else {
+//       // Handle the case where the inventory couldn't be fetched
+//     }
+//   } catch (error) {
+//     console.error('An error occurred:', error);
+//   }
+// }
 
 module.exports = {
   init,
