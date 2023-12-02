@@ -126,11 +126,6 @@ function loadInventory(itemsRay) {
     const updatePromises = [];
 
     let check = $(`#coc`).val() === '1' ? checkoutFunc.submitCreditCard() : checkoutFunc.submitCash(cart.total)
-    if($(`#coc`).val() === '1'){
-      check = checkoutFunc.submitCreditCard()
-    }else{
-      check = checkoutFunc.submitCash(cart.total)
-    }
     console.log(check)
     // we need to go through all the items in the cart
     if(check){
