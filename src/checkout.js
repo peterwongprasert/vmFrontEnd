@@ -35,18 +35,26 @@ function submitCreditCard() {
     return false;
   }
 
-  if (creditCardCCV.length < 3 || creditCardCCV.length > 3) {
+   else if (creditCardCCV.length < 3 || creditCardCCV.length > 3) {
     alert("Credit card CCV must be 3 characters");
     return false;
   }
 
-  if (creditCardExpDate.length < 4 || creditCardExpDate.length > 4) {
+  else if (creditCardExpDate.length < 4 || creditCardExpDate.length > 4) {
     alert("Credit card expiration date must be 4 characters (MMYY)");
     return false;
   }
 
-  let validate = validateCard(creditCardNumber, creditCardName, creditCardCCV, creditCardExpDate)
-  return validate;
+  else{
+    let validate = validateCard(creditCardNumber, creditCardName, creditCardCCV, creditCardExpDate)
+    if(validate == true)
+    {
+      alert("Checkout completed!");
+    }
+    return validate;
+  }
+
+  
 }
 
 function validateCard(creditCardNumber, creditCardName, creditCardCCV, creditCardExpDate){

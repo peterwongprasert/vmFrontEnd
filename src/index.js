@@ -75,28 +75,6 @@ function loadMachine(machineId){
 //   })
 // }
 
-// function loadInventory(itemsRay){
-//   // const colRef = collection(db, 'items')
-//   let colRef = collection(db, 'items')
-//   let q
-//   let items = []
-
-//   itemsRay.forEach(element => {
-//     q = query(colRef, where("id", "==", element))
-
-//     getDocs(q)
-//     .then((snapshot) => {
-//       snapshot.docs.forEach((doc) => {
-//         items.push({ ...doc.data(), id: doc.id})
-//       })
-//     })
-//     .catch(err => {
-//       console.log(err.message)
-//     })
-//   });
-//   return(items);
-//   // console.log(items)
-// }
 
 function loadInventory(itemsRay) {
   console.log('load inventory')
@@ -173,7 +151,6 @@ function loadInventory(itemsRay) {
                   console.log('All updates successful');
                   cart = {};
                   console.log(cart);
-                  location.reload()
               })
               .catch((error) => {
                   console.error('Error updating documents:', error);
